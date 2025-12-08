@@ -3,7 +3,7 @@ import { Item } from './interfaces/list-item.intertaface';
 import { CreateListItemDto } from './dto/create-list-item.dto';
 
 @Injectable()
-export class ItemsService {
+export class AppService {
   private readonly itemList: Item[] = [];
 
   createListItem(listItemDto: CreateListItemDto) {

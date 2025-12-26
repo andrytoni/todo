@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Delete, Body } from '@nestjs/common';
 import { ItemsService } from './items.service';
-import { ItemDto } from './dto/item.dto';
-import { Item } from './interfaces/list-item.intertaface';
+import { CreateItemDto } from './dtos/create-item.dto';
+import { Item } from './interfaces/item.interface';
 
 @Controller('item')
 export class ItemsController {
@@ -13,7 +13,7 @@ export class ItemsController {
   }
 
   @Post()
-  createListItem(@Body() CreateListItemDto: ItemDto) {
+  createListItem(@Body() CreateListItemDto: CreateItemDto) {
     this.appService.createListItem(CreateListItemDto);
   }
 

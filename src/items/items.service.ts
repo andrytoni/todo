@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Item } from './interfaces/list-item.intertaface';
-import { ItemDto } from './dto/item.dto';
+import { Item } from './interfaces/item.interface';
+import { CreateItemDto } from './dtos/create-item.dto';
 
 @Injectable()
 export class ItemsService {
   private readonly itemList: Item[] = [];
 
-  createListItem(listItemDto: ItemDto) {
+  createListItem(listItemDto: CreateItemDto) {
     this.itemList.push(listItemDto);
   }
 
@@ -14,7 +14,7 @@ export class ItemsService {
     return this.itemList;
   }
 
-  deleteListItem(listItemDto: ItemDto): boolean {
+  deleteListItem(listItemDto: CreateItemDto): boolean {
     const index = this.itemList.findIndex((i) => listItemDto.id === i.id);
     if (!index) return false;
     this.itemList.splice(index, 1);

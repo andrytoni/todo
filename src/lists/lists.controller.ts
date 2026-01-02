@@ -1,10 +1,18 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
-import { CreateListDto } from './dtos/create-list.dto';
+import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
+import { CreateListDto } from './dtos/create-list.dto.js';
+import { ListsService } from './lists.service.js';
 
 @Controller('lists')
 export class ListsController {
+  constructor(private listsService: ListsService) { }
+
   @Post()
-  createList(@Body() createListDto: CreateListDto) {
-    return;
+  async createList(@Body() createListDto: CreateListDto) {
+    return await this.listsService.createList(createListDto);
+  }
+
+  @Get()
+  async getAllLists() {
+    return await this.listsService.findAllLists();
   }
 }

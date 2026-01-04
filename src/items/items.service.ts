@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto.js';
-// import { UpdateItemDto } from './dto/update-item.dto.js';
+import { UpdateItemDto } from './dto/update-item.dto.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import { Item } from 'generated/prisma/client.js';
 
@@ -19,11 +19,11 @@ export class ItemsService {
     return `This action returns a #${id} item`;
   }
 
-  update(id: number /* , updateItemDto: UpdateItemDto*/) {
-    return `This action updates a #${id} item`;
+  async update(itemId: number, updateItemDto: UpdateItemDto): Promise<Item> {
+    return await this.prisma.updateItem(itemId, updateItemDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} item`;
+  async remove(itemId: number): Promise<Item> {
+    return await this.prisma.deleteItem(itemId);
   }
 }

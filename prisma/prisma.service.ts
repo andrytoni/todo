@@ -3,6 +3,7 @@ import { prisma } from './prisma.js';
 import { CreateListDto } from 'src/lists/dtos/create-list.dto.js';
 import { CreateItemDto } from 'src/items/dto/create-item.dto.js';
 import { Item } from 'generated/prisma/client.js';
+import { UpdateItemDto } from 'src/items/dto/update-item.dto.js';
 // import { List } from 'src/lists/list.interface';
 
 @Injectable()
@@ -13,6 +14,11 @@ export class PrismaService {
     });
   }
 
+  async findAllLists() {
+    return await prisma.list.findMany();
+  }
+
+  //Items
   async createItem(
     createItemDto: CreateItemDto,
     listId: number,
@@ -27,11 +33,26 @@ export class PrismaService {
     });
   }
 
-  async findAllLists() {
-    return await prisma.list.findMany();
+  async findAllItems(listId: number): Promise<Item[]> {
+    return await prisma.item.findMany({
+      where: { listId: listId, deletedAt: null },
+    });
   }
 
-  async findAllItems(listId: number): Promise<Item[]> {
-    return await prisma.item.findMany({ where: { listId: listId } });
+  async updateItem(
+    itemId: number,
+    updateItemDto: UpdateItemDto,
+  ): Promise<Item> {
+    return await prisma.item.update({
+      where: { id: itemId },
+      data: updateItemDto,
+    });
+  }
+
+  async deleteItem(itemId: number): Promise<Item> {
+    return await prisma.item.update({
+      where: { id: itemId },
+      data: { deletedAt: new Date() },
+    });
   }
 }

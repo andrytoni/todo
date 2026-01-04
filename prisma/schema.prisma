@@ -11,8 +11,19 @@ datasource db {
 }
 
 model List {
-  id          Int     @id @default(autoincrement())
-  name String?
+  id        Int      @id @default(autoincrement())
+  name      String
   createdAt DateTime
   updatedAt DateTime
+  items     Item[]
+}
+
+model Item {
+  id           Int      @id @default(autoincrement())
+  content      String
+  observations String?
+  listId       Int
+  list         List     @relation(fields: [listId], references: [id])
+  createdAt    DateTime
+  updatedAt    DateTime
 }

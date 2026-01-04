@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateListDto } from './dtos/create-list.dto.js';
-import { PrismaService } from '../prisma.service.js';
+import { PrismaService } from '../../prisma/prisma.service.js';
 
 @Injectable()
 export class ListsService {
-    constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService) {}
 
-    async createList(createListDto: CreateListDto) {
-        return await this.prismaService.create(createListDto);
-    }
+  async createList(createListDto: CreateListDto) {
+    return await this.prismaService.create(createListDto);
+  }
 
-    async findAllLists() {
-        return await this.prismaService.findAll();
-    }
+  async findAllLists() {
+    return await this.prismaService.findAllLists();
+  }
 }
